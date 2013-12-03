@@ -1,7 +1,7 @@
 Bit Array
 =========
 
-Experiment to store an array of 1-bit data and serialize back and forth from JSON. 
+Experiment to store an array of 1-bit data and serialize back and forth from JSON.
 
     {ceil} = Math
 
@@ -28,7 +28,7 @@ Experiment to store an array of 1-bit data and serialize back and forth from JSO
         buffer = new ArrayBuffer(ceil(sizeOrData/n))
         view = new Uint8Array(buffer)
 
-      self = 
+      self =
         get: (i) ->
           byteIndex = i >> 3
           offset = i % n

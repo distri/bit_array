@@ -52,3 +52,29 @@ describe "BitArray", ->
     testPattern(64)
     testPattern(77)
     testPattern(128)
+
+  # Some may wish for this to throw an error, but normal JS arrays don't
+  # and by default neither do typed arrays so this is just 'going with the flow'
+  it "should silently discard setting out of range values", ->
+    bitArray = BitArray(8)
+
+    assert.equal bitArray.set(9, 1), 0
+    assert.equal bitArray.get(9), 0
+
+  it "shouldn't be too big when serializing as json", ->
+    bitLength = 2048
+    bitArray = BitArray(bitLength)
+
+    serializedLength = bitArray.toJSON().length
+
+    n = 4
+    assert serializedLength < bitLength / n, "Serialized length < bit length divided by #{n} : #{serializedLength} < #{bitLength / n}"
+
+  it "should be exactly to the bit in length"
+  # Pending, we'd need to store an extra 3-bits (probably as 1 byte) to hold the
+  # offset from largest byte and read it out and back when serializing
+  -> 
+    bitArray = BitArray(9)
+
+    assert.equal bitArray.set(10, 1), 0
+    assert.equal bitArray.get(10), 0
