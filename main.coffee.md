@@ -33,7 +33,8 @@ Experiment to store an array of 1-bit data and serialize back and forth from JSO
           byteIndex = i >> 3
           offset = i % n
 
-          return (view[byteIndex] & masks[offset]) >> offset
+          if (value = view[byteIndex])?
+            return (value & masks[offset]) >> offset
 
         set: (i, value) ->
           byteIndex = i >> 3
@@ -42,6 +43,9 @@ Experiment to store an array of 1-bit data and serialize back and forth from JSO
           view[byteIndex] = ((value << offset) & masks[offset]) | (view[byteIndex] & inverseMasks[offset])
 
           return self.get(i)
+
+        size: ->
+          view.length * 8
 
         toJSON: ->
           serialize(view)
