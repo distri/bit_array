@@ -65,7 +65,8 @@ module.<span class="function"><span class="title">exports</span></span> = (sizeO
       byteIndex = i &gt;&gt; <span class="number">3</span>
       offset = i % n
 
-      <span class="keyword">return</span> (view[byteIndex] &amp; masks[offset]) &gt;&gt; offset
+      <span class="keyword">if</span> (value = view[byteIndex])?
+        <span class="keyword">return</span> (value &amp; masks[offset]) &gt;&gt; offset
 
     set: (i, value) -&gt;
       byteIndex = i &gt;&gt; <span class="number">3</span>
@@ -74,6 +75,9 @@ module.<span class="function"><span class="title">exports</span></span> = (sizeO
       view[byteIndex] = ((value &lt;&lt; offset) &amp; masks[offset]) | (view[byteIndex] &amp; inverseMasks[offset])
 
       <span class="keyword">return</span> self.get(i)
+
+    size: -&gt;
+      view.length * <span class="number">8</span>
 
     toJSON: -&gt;
       serialize(view)
